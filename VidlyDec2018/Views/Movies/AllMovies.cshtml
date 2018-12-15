@@ -1,0 +1,12 @@
+﻿@model VidlyDec2018.ViewModels.AllMoviesViewModel
+@{
+    ViewBag.Title = "AllMovies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AllMovies</h2>
+@foreach (var movs in Model.AllMovies)
+{
+    <li>@movs.Id and @movs.Name</li>
+}
+

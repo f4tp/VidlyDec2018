@@ -1,0 +1,14 @@
+﻿@model VidlyDec2018.ViewModels.AllCustomersViewModel
+@{
+    ViewBag.Title = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Page</h2>
+
+@foreach (var customer in Model.AllCustomers)
+{
+    @*<li>@customer.Name </li>*@
+    <li>@Html.ActionLink(customer.Name, String.Format("/Details/{0}", customer.Id),"Customers")</li>
+}
+
