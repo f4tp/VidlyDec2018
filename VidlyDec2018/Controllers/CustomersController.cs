@@ -10,10 +10,33 @@ namespace VidlyDec2018.Controllers
 {
     public class CustomersController : Controller
     {
-        //GET one customer with ID
-        [Route("Customers/Details/{Id}")]
-        public ActionResult Customer(int Id)
+
+        private ApplicationDbContext _context;
+
+        public CustomersController()
         {
+            _context = new ApplicationDbContext();
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+
+        //GET one customer with ID
+        //[Route("Details/{Id}")]
+        public ActionResult Details(int id)
+        {
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+            /*
             var custsList = new List<Customer>
             {
                 new Customer {Id = 1, Name = "Bob"},
@@ -32,13 +55,15 @@ namespace VidlyDec2018.Controllers
             }
 
             return View(cust);
+            */
         }
 
 
         // GET: Customers
-        [Route("Customers/AllCustomers")]
-        public ActionResult AllCustomers()
+        //[Route("Customers/AllCustomers")]
+        public ActionResult Index()
         {
+            
             var custsList = new List<Customer>
             {
                 new Customer {Id = 1, Name = "Bob"},
@@ -50,10 +75,20 @@ namespace VidlyDec2018.Controllers
             {
                 AllCustomers = custsList
             };
+
             return View(viewModel);
+            /*
+            var customers = _context.Customers.ToList();
+            var viewModel = new IndexViewModel
+            {
+                AllCustomers = customers
+            };
+            
+            return View(customers);
+            */
         }
 
 
-      
+
     }
 }
