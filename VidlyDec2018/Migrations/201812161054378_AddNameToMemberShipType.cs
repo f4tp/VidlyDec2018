@@ -1,0 +1,18 @@
+namespace VidlyDec2018.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class AddNameToMemberShipType : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.MembershipTypes", "Name", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.MembershipTypes", "Name");
+        }
+    }
+}

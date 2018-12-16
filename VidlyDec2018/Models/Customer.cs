@@ -14,9 +14,11 @@ namespace VidlyDec2018.Models
         [StringLength(255)]
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
+        //Navigation property - allows for table to be created without makign membershipType known explcitly to the DBContext 
         public MembershipType MebershipType { get; set; }
         //below - as naming convention is used, this will be a foreign key in this DB
         public byte MemberShipTypeId{ get; set; }
+        public DateTime? Birthdate { get; set; }
 
 
     }

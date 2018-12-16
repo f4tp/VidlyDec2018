@@ -26,7 +26,9 @@
                 @* alternative way of the above
                 <td>@Html.ActionLink(customer.Name, "Details", new { id = customer.Id }, null)</td>
                 *@
-                @*<td>@customer.MebershipType.Id</td>*@
+                @* below would cause an exception, as only customer objects have been loaded from DB, not related tables / data from*@
+                @*customer is data from one table .MembershipType is the foreign key, .Discount rate is in another table, % is plain text*@
+                <td>@customer.MebershipType.Name</td>
             </tr>
         }
     </tbody>

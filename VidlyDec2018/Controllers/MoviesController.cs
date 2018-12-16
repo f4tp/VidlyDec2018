@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,13 +8,38 @@ using Microsoft.Ajax.Utilities;
 using VidlyDec2018.Models;
 using VidlyDec2018.ViewModels;
 
+
 namespace VidlyDec2018.Controllers
 {
     public class MoviesController : Controller
     {
-        [Route("Movies/AllMovies")]
-        public ActionResult AllMovies()
+
+        private ApplicationDbContext _context;
+
+        //ctor
+        public MoviesController()
         {
+            _context = new ApplicationDbContext();
+        }
+
+        //needed to dispose of DB connection
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+
+
+        //[Route("Movies/AllMovies")]
+        public ActionResult Index()
+        {
+
+            var movis = _context.Movies.Include(m => m.Genre).ToList();
+            return View(movis);
+            //return View();
+            
+
+            /*
             Movie movIn = new Movie
             {
                 Id = 1,
@@ -38,6 +64,18 @@ namespace VidlyDec2018.Controllers
             };
             
             return View(viewMod);
+            */
+        }
+
+        public ActionResult Details(int id)
+        {
+            //singleOrDefautl also queries database immediately, not in iterator in view
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
         }
 
 
@@ -106,6 +144,9 @@ namespace VidlyDec2018.Controllers
         //if index is called with no params, it can still be called...
         //this routine sorts the state of the objects to format the strinmg for the URI
         //would be called e.g. Movies?pageIndex=5&sortBy=Date
+
+
+            /*
         public ActionResult Index(int? pageIndex, string sortBy)
         {
             if (!pageIndex.HasValue)
@@ -120,6 +161,7 @@ namespace VidlyDec2018.Controllers
 
             return Content(String.Format("pageIndex={0}&sortby={1}", pageIndex, sortBy));
         }
+        */
 
         //mvcaction4 - tab - code snippet for Action Result... doesn't work
         //44mins in vid to get this route

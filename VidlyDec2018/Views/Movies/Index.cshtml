@@ -1,0 +1,28 @@
+﻿@*@model VidlyDec2018.ViewModels.AllMoviesViewModel *@
+@model IEnumerable<VidlyDec2018.Models.Movie>
+@{
+    ViewBag.Title = "AllMovies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AllMoviesIndex</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Membership Type</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(movie.Name, String.Format("/Details/{0}", movie.Id), "Movies")</td>
+                
+                <td>@movie.Genre.Id</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

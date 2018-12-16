@@ -7,4 +7,10 @@
 <h2>@Model.Name</h2>
 
 <li>ID: @Model.Id Name: @Model.Name</li>
+@if (Model.Birthdate != null)
+{
+    <Li>@Model.Birthdate.ToString()</Li>
+
+}
+    
 

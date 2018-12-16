@@ -225,9 +225,42 @@
     <Compile Include="Migrations\201812160953552_InsertIntoCustomersTable1.Designer.cs">
       <DependentUpon>201812160953552_InsertIntoCustomersTable1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812161054378_AddNameToMemberShipType.cs" />
+    <Compile Include="Migrations\201812161054378_AddNameToMemberShipType.Designer.cs">
+      <DependentUpon>201812161054378_AddNameToMemberShipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161055301_AddNameDataInMemberShipType.cs" />
+    <Compile Include="Migrations\201812161055301_AddNameDataInMemberShipType.Designer.cs">
+      <DependentUpon>201812161055301_AddNameDataInMemberShipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161108200_AddNullableBirthDateToCustomerModel.cs" />
+    <Compile Include="Migrations\201812161108200_AddNullableBirthDateToCustomerModel.Designer.cs">
+      <DependentUpon>201812161108200_AddNullableBirthDateToCustomerModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161109002_AddDataInNullableDateInCustomerModel.cs" />
+    <Compile Include="Migrations\201812161109002_AddDataInNullableDateInCustomerModel.Designer.cs">
+      <DependentUpon>201812161109002_AddDataInNullableDateInCustomerModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161115432_AddDataInNullableDateInCustomerModelREAL.cs" />
+    <Compile Include="Migrations\201812161115432_AddDataInNullableDateInCustomerModelREAL.Designer.cs">
+      <DependentUpon>201812161115432_AddDataInNullableDateInCustomerModelREAL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161427439_AddGenreAndMovieNewProps.cs" />
+    <Compile Include="Migrations\201812161427439_AddGenreAndMovieNewProps.Designer.cs">
+      <DependentUpon>201812161427439_AddGenreAndMovieNewProps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161430547_UpdateMoviesInNewProps.cs" />
+    <Compile Include="Migrations\201812161430547_UpdateMoviesInNewProps.Designer.cs">
+      <DependentUpon>201812161430547_UpdateMoviesInNewProps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161441362_SetNullableInMovies.cs" />
+    <Compile Include="Migrations\201812161441362_SetNullableInMovies.Designer.cs">
+      <DependentUpon>201812161441362_SetNullableInMovies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
@@ -299,9 +332,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
-    <Content Include="Views\Movies\AllMovies.cshtml" />
+    <Content Include="Views\Movies\Index.cshtml" />
     <Content Include="Views\Movies\Random.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -341,6 +375,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812160953552_InsertIntoCustomersTable1.resx">
       <DependentUpon>201812160953552_InsertIntoCustomersTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161054378_AddNameToMemberShipType.resx">
+      <DependentUpon>201812161054378_AddNameToMemberShipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161055301_AddNameDataInMemberShipType.resx">
+      <DependentUpon>201812161055301_AddNameDataInMemberShipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161108200_AddNullableBirthDateToCustomerModel.resx">
+      <DependentUpon>201812161108200_AddNullableBirthDateToCustomerModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161109002_AddDataInNullableDateInCustomerModel.resx">
+      <DependentUpon>201812161109002_AddDataInNullableDateInCustomerModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161115432_AddDataInNullableDateInCustomerModelREAL.resx">
+      <DependentUpon>201812161115432_AddDataInNullableDateInCustomerModelREAL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161427439_AddGenreAndMovieNewProps.resx">
+      <DependentUpon>201812161427439_AddGenreAndMovieNewProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161430547_UpdateMoviesInNewProps.resx">
+      <DependentUpon>201812161430547_UpdateMoviesInNewProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161441362_SetNullableInMovies.resx">
+      <DependentUpon>201812161441362_SetNullableInMovies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

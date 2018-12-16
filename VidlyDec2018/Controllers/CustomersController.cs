@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VidlyDec2018.Models;
 using VidlyDec2018.ViewModels;
+
 
 namespace VidlyDec2018.Controllers
 {
@@ -32,7 +34,13 @@ namespace VidlyDec2018.Controllers
             //var customers = _context.Customers;
 
             //adding .ToList ensures querying of DB is done when this line is executed
-            var customers = _context.Customers.ToList();
+            //taken out as no eager loading
+            //var customers = _context.Customers.ToList();
+
+            //Include(c +>).. etc method is eager loading
+            //above needs Using Data.System.Entity
+            //eager loading - load all data you want, including related data in other tables
+            var customers = _context.Customers.Include(c => c.MebershipType ).ToList();
             return View(customers);
 
             #region internal data, not db
