@@ -79,12 +79,26 @@ namespace VidlyDec2018.Controllers
         }
         //viewmodel passed in is model binding
         //thsi only allows this method to be called with a Post HTTP request, not a get
-        //public ActionResult Create(ViewModels.Customers.CustomerFormViewModel viewModel)
+        //public ActionResult Save(ViewModels.Customers.CustomerFormViewModel viewModel)
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        public ActionResult Save(Customer customer)
         {
-
-            _context.Customers.Add(customer);
+            //customer id passed in - if 0 means new customer
+            //as hidden field on form giving 0on New customer, or id of customer from model
+            if (customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                var customerInDB = _context.Customers.Single(c => c.Id == customer.Id);
+                //TryUpdateModel(customerInDB, "", new String[] { "Name", "Email" });
+                customerInDB.Name = customer.Name;
+                customerInDB.Birthdate = customer.Birthdate;
+                customerInDB.MemberShipTypeId = customer. MemberShipTypeId;
+                customerInDB.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
+            
             //.SaveChanges persists things to storage, not just this one, but any database change that's gone on.. if any fail, none of the changes go ahead
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
