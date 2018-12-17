@@ -30,7 +30,7 @@ namespace VidlyDec2018.Controllers
         //[Route("Customers/AllCustomers")]
         public ActionResult Index()
         {
-            //witrhout .TGoList, the database is not queried until the for each iterator in the view
+            //witrhout .ToList, the database is not queried until the for each iterator in the view
             //var customers = _context.Customers;
 
             //adding .ToList ensures querying of DB is done when this line is executed
@@ -66,8 +66,13 @@ namespace VidlyDec2018.Controllers
 
         public ActionResult New()
         {
+
             var membershiptypes = _context.MembershipTypes.ToList();
-            return View();
+            var viewModel = new ViewModels.Customers.NewCustomerViewModel
+            {
+                MembershipTypes = membershiptypes
+            };
+            return View(viewModel);
         }
 
 

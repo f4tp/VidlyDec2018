@@ -17,6 +17,7 @@ namespace VidlyDec2018.Models
         //Navigation property - allows for table to be created without makign membershipType known explcitly to the DBContext 
         public MembershipType MebershipType { get; set; }
         //below - as naming convention is used, this will be a foreign key in this DB
+        [Display(Name="Membership Type")]
         public byte MemberShipTypeId{ get; set; }
         //Display attribute allows you to set form label... this way you have to recompiel the code when making changes to HTML
         //another was to achieve the above is to manually add a label... e.g.

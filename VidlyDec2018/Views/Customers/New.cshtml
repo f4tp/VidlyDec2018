@@ -1,4 +1,5 @@
-﻿@model VidlyDec2018.Models.Customer
+﻿@*@model VidlyDec2018.Models.Customer*@
+@model VidlyDec2018.ViewModels.Customers.NewCustomerViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,19 +16,26 @@
 {
     <div class="form-group">
         @*@Html.LabelFor(m => m.Name)*@
-        <label for="Name"> Name </label>
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <label for="Name"> Customer.Name </label>
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Birthdate)
-        @Html.TextBoxFor(m => m.Birthdate, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Customer.Birthdate)
+        @Html.TextBoxFor(m => m.Customer.Birthdate, new { @class = "form-control" })
     </div>
 
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(m => m.IsSubscribedToNewsletter) Subscribed to Newsletter?
+            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
         </label>
+    </div>
+
+    
+    @*arguments for SelectList: model for combobox to use, name or property that holds the value for each item - index in teh INumerable I think, name of the property that holds teh strign name to be displayed), top element to be displayed, usual form-control class *@
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.MemberShipTypeId)
+        @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
     </div>
     <div>
 
