@@ -1,5 +1,5 @@
 ﻿@*@model VidlyDec2018.Models.Customer*@
-@model VidlyDec2018.ViewModels.Customers.NewCustomerViewModel
+@model VidlyDec2018.ViewModels.Customers.CustomerFormViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,9 +20,19 @@
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
     </div>
 
+    @*second argument is extra parameter, formats the string so you don't see the time as well as teh data from the DateTime object  *@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Birthdate)
-        @Html.TextBoxFor(m => m.Customer.Birthdate, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+    </div>
+
+
+
+
+    @*arguments for SelectList: model for combobox to use, name or property that holds the value for each item - index in teh INumerable I think, name of the property that holds teh strign name to be displayed), top element to be displayed, usual form-control class *@
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.MemberShipTypeId)
+        @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
     </div>
 
     <div class="checkbox">
@@ -31,15 +41,12 @@
         </label>
     </div>
 
-    
-    @*arguments for SelectList: model for combobox to use, name or property that holds the value for each item - index in teh INumerable I think, name of the property that holds teh strign name to be displayed), top element to be displayed, usual form-control class *@
-    <div class="form-group">
-        @Html.LabelFor(m => m.Customer.MemberShipTypeId)
-        @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
-    </div>
     <div>
-
+        <button type="submit" class="btn btn-primary"> Save </button>
     </div>
+
+
+
 }
 
 

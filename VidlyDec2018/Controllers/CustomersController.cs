@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using VidlyDec2018.Models;
 using VidlyDec2018.ViewModels;
+using VidlyDec2018.ViewModels.Customers;
 
 
 namespace VidlyDec2018.Controllers
@@ -64,18 +65,50 @@ namespace VidlyDec2018.Controllers
 
         }
 
+        //this method is called New, but the page it links to is called CustomerForm.cshtml...
+        //...therefore the name of the form has to be passed explicitly
         public ActionResult New()
         {
 
             var membershiptypes = _context.MembershipTypes.ToList();
-            var viewModel = new ViewModels.Customers.NewCustomerViewModel
+            var viewModel = new ViewModels.Customers.CustomerFormViewModel
             {
                 MembershipTypes = membershiptypes
             };
-            return View(viewModel);
+            return View("CustomerForm", viewModel);
+        }
+        //viewmodel passed in is model binding
+        //thsi only allows this method to be called with a Post HTTP request, not a get
+        //public ActionResult Create(ViewModels.Customers.CustomerFormViewModel viewModel)
+        [HttpPost]
+        public ActionResult Create(Customer customer)
+        {
+
+            _context.Customers.Add(customer);
+            //.SaveChanges persists things to storage, not just this one, but any database change that's gone on.. if any fail, none of the changes go ahead
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Customers");
         }
 
+        public ActionResult Edit (int id)
+        {
+            //if the given customer sent from ??/ exists, it will eb returned, otherwise null will be sent back 
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+            //this returns the New view, otherwise teh view it woudl have looked to transfer to would have been edit
+            //it also uses te viewModel created before, passing it in
+            return View("CustomerForm", viewModel);
+        }
         
         //GET one customer with ID
         //[Route("Details/{Id}")]
