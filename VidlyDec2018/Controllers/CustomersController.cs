@@ -64,6 +64,12 @@ namespace VidlyDec2018.Controllers
 
         }
 
+        public ActionResult New()
+        {
+            var membershiptypes = _context.MembershipTypes.ToList();
+            return View();
+        }
+
 
         
         //GET one customer with ID
