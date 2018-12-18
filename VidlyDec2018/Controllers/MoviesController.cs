@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using VidlyDec2018.Models;
 using VidlyDec2018.ViewModels;
+//using VidlyDec2018.ViewModels.Movies;
 
 
 namespace VidlyDec2018.Controllers
@@ -65,6 +66,16 @@ namespace VidlyDec2018.Controllers
             
             return View(viewMod);
             */
+        }
+
+        public ActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+            var viewModel = new ViewModels.Movies.MovieFormViewModel
+            {
+                Genres = genres
+            };
+            return View("MovieForm", viewModel);
         }
 
         public ActionResult Details(int id)

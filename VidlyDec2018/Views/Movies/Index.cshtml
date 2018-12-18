@@ -6,6 +6,16 @@
 }
 
 <h2>AllMoviesIndex</h2>
+
+@using (Html.BeginForm("New", "Movies"))
+{
+
+    <div>
+        <button type="submit" class="btn btn-primary"> New Movie </button>
+    </div>
+}
+
+
 <table>
     <thead>
         <tr>
@@ -19,10 +29,10 @@
         {
             <tr>
                 <td>@Html.ActionLink(movie.Name, String.Format("/Details/{0}", movie.Id), "Movies")</td>
-                
+
                 <td>@movie.Genre.Id</td>
             </tr>
-        }
+            }
     </tbody>
 
 </table>

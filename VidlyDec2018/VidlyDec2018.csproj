@@ -270,6 +270,7 @@
     <Compile Include="ViewModels\Customers\CustomerFormViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\AllMoviesViewModel.cs" />
+    <Compile Include="ViewModels\Movies\MovieFormViewModel.cs" />
     <Compile Include="ViewModels\RandomMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -338,6 +339,7 @@
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
     <Content Include="Views\Customers\CustomerForm.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
