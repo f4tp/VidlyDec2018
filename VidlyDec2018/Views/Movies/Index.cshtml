@@ -1,11 +1,21 @@
 ﻿@*@model VidlyDec2018.ViewModels.AllMoviesViewModel *@
+
+@*I think this needs to be the viewmodel rather than teh Movie model... Themovie is still null*@
+
+
+@*@model IEnumerable<VidlyDec2018.Models.Movie>*@
+@*@model List<VidlyDec2018.ViewModels.Movies.MovieFormViewModel>*@
+@*@model VidlyDec2018.ViewModels.Movies.MovieFormViewModel*@
 @model IEnumerable<VidlyDec2018.Models.Movie>
+
 @{
     ViewBag.Title = "AllMovies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h2>AllMoviesIndex</h2>
+
 
 @using (Html.BeginForm("New", "Movies"))
 {
@@ -19,20 +29,26 @@
 <table>
     <thead>
         <tr>
-            <th>Customer</th>
-            <th>Membership Type</th>
+            <th>Movies</th>
+            <th>Genre</th>
         </tr>
     </thead>
 
     <tbody>
+        
+        
         @foreach (var movie in Model)
         {
             <tr>
-                <td>@Html.ActionLink(movie.Name, String.Format("/Details/{0}", movie.Id), "Movies")</td>
+                @*<td>@Html.Action(movie.Name, "Movies")</td>*@
+                
+                <td>@Html.ActionLink(movie.Name, String.Format("/Edit/{0}", movie.Id), "Movies")</td>
 
                 <td>@movie.Genre.Id</td>
+                
             </tr>
-            }
+        }
+            
     </tbody>
 
 </table>

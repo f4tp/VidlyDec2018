@@ -13,6 +13,14 @@ namespace VidlyDec2018.ViewModels.Customers
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
         public Customer Customer { get; set; }
 
-  
+        //public static CustomerFormViewModel StaticCustomerFormViewModel;
+
+       // public static CustomerFormViewModel GetStaticCustomerFormViewModel()
+        //{
+        
+            //return StaticCustomerFormViewModel;
+        //}
+
+
     }
 }

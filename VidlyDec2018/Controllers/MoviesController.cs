@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using VidlyDec2018.Models;
 using VidlyDec2018.ViewModels;
-//using VidlyDec2018.ViewModels.Movies;
+using VidlyDec2018.ViewModels.Movies;
 
 
 namespace VidlyDec2018.Controllers
@@ -35,10 +36,32 @@ namespace VidlyDec2018.Controllers
         public ActionResult Index()
         {
 
-            var movis = _context.Movies.Include(m => m.Genre).ToList();
-            return View(movis);
-            //return View();
-            
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            return View(movies);
+
+            /*
+
+            MovieFormViewModel viewMod;
+            if (movieViewModelIn.Movies == null)
+            {
+                viewMod = new MovieFormViewModel();
+                var movis = _context.Movies.Include(m => m.Genre).ToList();
+                
+                viewMod.Movies = movis;
+                
+            }
+            else
+            {
+                viewMod = movieViewModelIn;
+            }
+
+            return View(viewMod);
+
+            */
+            //var movsAgain = _context.MovieFormViewModels.Include(m => m.Genres).ToList();
+
+            //return View(movsAgain);
+
 
             /*
             Movie movIn = new Movie
@@ -70,13 +93,166 @@ namespace VidlyDec2018.Controllers
 
         public ActionResult New()
         {
+
             var genres = _context.Genres.ToList();
             var viewModel = new ViewModels.Movies.MovieFormViewModel
             {
                 Genres = genres
             };
             return View("MovieForm", viewModel);
+
+            /*
+
+            // return View("MovieForm");
+
+            //I think i need to initialse a new Movie object here...
+            //as this is called from the new button from index.cshtml
+            //as the movie objetc expected in the MovieForm view will be blank
+            Movie blankMovie = new Movie
+            {
+                Name = "."
+            };
+            var viewModel = new MovieFormViewModel
+            {
+                SingleMovie = new Movie { Name = "." },
+                //Movies = _context.Movies.Include(m => m.Genre).ToList(),
+
+                Genres = _context.Genres.ToList()
+            };
+            
+            return View("MovieForm", viewModel);
+            */
+            
         }
+
+
+        //The movie object is null here... fix it.. start here
+
+       // public ActionResult Save(Movie moviein)
+
+            //this object posted in has to be called movie, changing it breaks it - gives null object
+            //I think the object in teh viewmodel, the form, and the object passed in must be teh same as teh object name - e.g. Movie movie all the way through
+            //have a look in the Post request to see details
+       [HttpPost]
+       public ActionResult Save (Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDB = _context.Movies.Single(c => c.Id == movie.Id);
+
+                movieInDB.Name = movie.Name;
+                movieInDB.NumberInStock = movie.NumberInStock;
+
+                movieInDB.GenreId = movie.GenreId;
+                //Genre object is not in the DB, only the ID
+                //movieInDB.Genre = moviein.Genre;
+
+                movieInDB.DateAdded = movie.DateAdded;
+                movieInDB.ReleaseDate = movie.ReleaseDate;
+            }
+
+           
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
+
+
+            /*
+            if (movieViewModelIn.SingleMovie.Id == 0)
+            {
+                movieViewModelIn.SingleMovie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movieViewModelIn.SingleMovie);
+            }
+
+            return View("Index", movieViewModelIn);
+            */
+
+
+            /*
+            //issues - date for release data sent back is a different data type - DateTimeToDateTime2
+            //issues - date for data added sent back is a different data type - DateTimeToDateTime2
+            //Movie Name is null when it is stored into the database
+            //Number in stock is also null, initilaising with 0
+            //movie.DateAdded = DateTime.Now;
+            //movie.ReleaseDate = DateTime.Now;
+            moviein.GenreId = 1;
+            //moviein.Name = "This is tester";
+         
+
+            if (moviein.Id == 0)
+            {
+                moviein.DateAdded = DateTime.Now;
+                _context.Movies.Add(moviein);
+            }
+            else
+            {
+                //Question - how does Genre get set when only ID is set?
+                //there is a Genre object composed in the Movie class...
+                //my guess is the get / set method on here auto updates it... find out
+                //Console.WriteLine(moviein.Name);
+                var movieInDB = _context.Movies.Single(m => m.Id == moviein.Id);
+                movieInDB.Name = moviein.Name;
+                movieInDB.GenreId = moviein.GenreId;
+                movieInDB.ReleaseDate = moviein.ReleaseDate;
+                //movieInDB.DateAdded = moviein.DateAdded;
+                movieInDB.NumberInStock = moviein.NumberInStock;
+            }
+                       
+            try
+            {
+                _context.SaveChanges();
+            }
+            //need using System.Data.Entity.Validation; for the below
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            
+            return RedirectToAction("Index", "Movies");
+
+            /*
+        }
+
+        
+
+        //old edit method
+
+        /*
+        //ID passed in through URI /controller/method/param
+        //can also be passed in as movies/edit?id=1
+        //id here matters as it is a part of the default route ruling system
+        public ActionResult Edit(int id) 
+        {
+            return Content("id=" + id); 
+             */
+        }
+
+
+
+        public ActionResult Edit(int id)
+        {
+
+            var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
+
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new ViewModels.Movies.MovieFormViewModel
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+
 
         public ActionResult Details(int id)
         {
@@ -141,13 +317,12 @@ namespace VidlyDec2018.Controllers
         
     }
 
-        //ID passed in through URI /controller/method/param
-        //can also be passed in as movies/edit?id=1
-        //id here matters as it is a part of the default route ruling system
-        public ActionResult Edit(int id) 
+        public void InitializeMovieFormViewModel()
         {
-            return Content("id=" + id); 
+
         }
+
+        
 
         //movies
         //to make a parameter optional, you make it nullable... with the ?

@@ -257,6 +257,18 @@
     <Compile Include="Migrations\201812161441362_SetNullableInMovies.Designer.cs">
       <DependentUpon>201812161441362_SetNullableInMovies.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812181412109_UpdateDateTimeToNullableMovies.cs" />
+    <Compile Include="Migrations\201812181412109_UpdateDateTimeToNullableMovies.Designer.cs">
+      <DependentUpon>201812181412109_UpdateDateTimeToNullableMovies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812181443279_AddIdPrimKeyMovies.cs" />
+    <Compile Include="Migrations\201812181443279_AddIdPrimKeyMovies.Designer.cs">
+      <DependentUpon>201812181443279_AddIdPrimKeyMovies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812191142348_cancelLast.cs" />
+    <Compile Include="Migrations\201812191142348_cancelLast.Designer.cs">
+      <DependentUpon>201812191142348_cancelLast.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -402,6 +414,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812161441362_SetNullableInMovies.resx">
       <DependentUpon>201812161441362_SetNullableInMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181412109_UpdateDateTimeToNullableMovies.resx">
+      <DependentUpon>201812181412109_UpdateDateTimeToNullableMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181443279_AddIdPrimKeyMovies.resx">
+      <DependentUpon>201812181443279_AddIdPrimKeyMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812191142348_cancelLast.resx">
+      <DependentUpon>201812191142348_cancelLast.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

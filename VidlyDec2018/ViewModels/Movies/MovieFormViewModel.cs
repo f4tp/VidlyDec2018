@@ -10,9 +10,15 @@ namespace VidlyDec2018.ViewModels.Movies
     public class MovieFormViewModel
     {
         //IEnumrable - allows iteration, but doesnt have add / contains methods etc
-        public IEnumerable<Genre> Genres { get; set; }
-        public Movie Movies { get; set; }
+        public List<Genre> Genres { get; set; }
+        public Movie Movie { get; set;}
+        //might not be needed
+       // public List<Movie> Movies { get; set; }
+        
 
-  
+        
+
+
+       
     }
 }

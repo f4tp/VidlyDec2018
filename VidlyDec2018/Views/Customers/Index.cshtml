@@ -8,6 +8,14 @@
 
 <h2>All Customers</h2>
 
+@using (Html.BeginForm("New", "Customers"))
+{
+
+    <div>
+        <button type="submit" class="btn btn-primary"> New Customer </button>
+    </div>
+}
+
 
 
 <table>
@@ -21,25 +29,25 @@
     <tbody>
         @foreach (var customer in Model)
         {
-        <tr>
-            <td>@Html.ActionLink(customer.Name, String.Format("/Edit/{0}", customer.Id), "Customers")</td>
+            <tr>
+                <td>@Html.ActionLink(customer.Name, String.Format("/Edit/{0}", customer.Id), "Customers")</td>
 
-            @*old one below*@
-            @*<td>@Html.ActionLink(customer.Name, String.Format("/Details/{0}", customer.Id), "Customers")</td>*@
+                @*old one below*@
+                @*<td>@Html.ActionLink(customer.Name, String.Format("/Details/{0}", customer.Id), "Customers")</td>*@
 
-            @*video variant didn't work for me*@
-            @*<td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id })</td>*@
-            @* alternative way of the above
-        <td>@Html.ActionLink(customer.Name, "Details", new { id = customer.Id }, null)</td>
-            *@
-            @* below would cause an exception, as only customer objects have been loaded from DB, not related tables / data from*@
-            @*customer is data from one table .MembershipType is the foreign key, .Discount rate is in another table, % is plain text*@
-            <td>@customer.MebershipType.Name</td>
-        </tr>
+                @*video variant didn't work for me*@
+                @*<td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id })</td>*@
+                @* alternative way of the above
+                    <td>@Html.ActionLink(customer.Name, "Details", new { id = customer.Id }, null)</td>
+                *@
+                @* below would cause an exception, as only customer objects have been loaded from DB, not related tables / data from*@
+                @*customer is data from one table .MembershipType is the foreign key, .Discount rate is in another table, % is plain text*@
+                <td>@customer.MebershipType.Name</td>
+            </tr>
         }
     </tbody>
 
 </table>
-    
+
 
 

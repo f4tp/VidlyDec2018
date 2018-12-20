@@ -95,7 +95,7 @@ namespace VidlyDec2018.Controllers
                 //TryUpdateModel(customerInDB, "", new String[] { "Name", "Email" });
                 customerInDB.Name = customer.Name;
                 customerInDB.Birthdate = customer.Birthdate;
-                customerInDB.MemberShipTypeId = customer. MemberShipTypeId;
+                customerInDB.MemberShipTypeId = customer.MemberShipTypeId;
                 customerInDB.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
             }
             
@@ -104,6 +104,7 @@ namespace VidlyDec2018.Controllers
             return RedirectToAction("Index", "Customers");
         }
 
+        
         public ActionResult Edit (int id)
         {
             //if the given customer sent from ??/ exists, it will eb returned, otherwise null will be sent back 
@@ -124,6 +125,8 @@ namespace VidlyDec2018.Controllers
             return View("CustomerForm", viewModel);
         }
         
+
+
         //GET one customer with ID
         //[Route("Details/{Id}")]
         public ActionResult Details(int id)
