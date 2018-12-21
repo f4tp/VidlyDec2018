@@ -73,6 +73,7 @@ namespace VidlyDec2018.Controllers
             var membershiptypes = _context.MembershipTypes.ToList();
             var viewModel = new ViewModels.Customers.CustomerFormViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershiptypes
             };
             return View("CustomerForm", viewModel);
@@ -85,6 +86,8 @@ namespace VidlyDec2018.Controllers
         {
             //Model>State.IsValid - detects whether the Model passed in meets the valdiation rules set in the class
 
+            //validation failing because MembershipType object is empty / null
+            //all this took to solve it was creatign teh Customer object before in the New() method... I had already sent acorss the MembershipTypes in the viewmodel put in
             if (!ModelState.IsValid)
             {
                 var viewModel = new CustomerFormViewModel
@@ -92,8 +95,8 @@ namespace VidlyDec2018.Controllers
                     Customer = customer,
                     MembershipTypes = _context.MembershipTypes.ToList()
                 };
-                //if teh view is not valid / teh object doesn;t meet teh validation rules,
-                //return the same view?
+                //if the view is not valid / the object doesn't meet teh validation rules,
+                //return the same view with teh updated model, to keep them on it with teh valdiaton error essages
                 return View("CustomerForm", viewModel);
             }
             //customer id passed in - if 0 means new customer

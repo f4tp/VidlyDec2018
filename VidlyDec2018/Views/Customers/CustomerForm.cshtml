@@ -36,16 +36,17 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Birthdate)
         @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Birthdate)
     </div>
 
-    
+
 
 
     @*arguments for SelectList: model for combobox to use, name or property that holds the value for each item - index in teh INumerable I think, name of the property that holds teh strign name to be displayed), top element to be displayed, usual form-control class *@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MemberShipTypeId)
         @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Customer.MemberShipTypeId, "A membership type is required")
+       @Html.ValidationMessageFor(m => m.Customer.MemberShipTypeId, "A membership type is required")
     </div>
 
     <div class="checkbox">
