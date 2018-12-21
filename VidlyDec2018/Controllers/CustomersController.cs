@@ -83,6 +83,19 @@ namespace VidlyDec2018.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
+            //Model>State.IsValid - detects whether the Model passed in meets the valdiation rules set in the class
+
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                //if teh view is not valid / teh object doesn;t meet teh validation rules,
+                //return the same view?
+                return View("CustomerForm", viewModel);
+            }
             //customer id passed in - if 0 means new customer
             //as hidden field on form giving 0on New customer, or id of customer from model
             if (customer.Id == 0)

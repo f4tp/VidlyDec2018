@@ -30,8 +30,7 @@ namespace VidlyDec2018.Controllers
             _context.Dispose();
         }
 
-
-
+        
         //[Route("Movies/AllMovies")]
         public ActionResult Index()
         {
@@ -39,56 +38,7 @@ namespace VidlyDec2018.Controllers
             var movies = _context.Movies.Include(m => m.Genre).ToList();
             return View(movies);
 
-            /*
-
-            MovieFormViewModel viewMod;
-            if (movieViewModelIn.Movies == null)
-            {
-                viewMod = new MovieFormViewModel();
-                var movis = _context.Movies.Include(m => m.Genre).ToList();
-                
-                viewMod.Movies = movis;
-                
-            }
-            else
-            {
-                viewMod = movieViewModelIn;
-            }
-
-            return View(viewMod);
-
-            */
-            //var movsAgain = _context.MovieFormViewModels.Include(m => m.Genres).ToList();
-
-            //return View(movsAgain);
-
-
-            /*
-            Movie movIn = new Movie
-            {
-                Id = 1,
-                Name = "HeMan"
-            };
-
-            Movie movIn2 = new Movie
-            {
-                Id = 2,
-                Name = "Skeletor"
-            };
-
-            List<Movie> tempMovs = new List<Movie>
-            {
-                movIn,
-                movIn2
-            };
-
-            var viewMod = new ViewModels.AllMoviesViewModel
-            {
-                AllMovies = tempMovs
-            };
-            
-            return View(viewMod);
-            */
+           
         }
 
         public ActionResult New()
@@ -101,39 +51,15 @@ namespace VidlyDec2018.Controllers
             };
             return View("MovieForm", viewModel);
 
-            /*
-
-            // return View("MovieForm");
-
-            //I think i need to initialse a new Movie object here...
-            //as this is called from the new button from index.cshtml
-            //as the movie objetc expected in the MovieForm view will be blank
-            Movie blankMovie = new Movie
-            {
-                Name = "."
-            };
-            var viewModel = new MovieFormViewModel
-            {
-                SingleMovie = new Movie { Name = "." },
-                //Movies = _context.Movies.Include(m => m.Genre).ToList(),
-
-                Genres = _context.Genres.ToList()
-            };
-            
-            return View("MovieForm", viewModel);
-            */
-            
+           
         }
 
-
-        //The movie object is null here... fix it.. start here
-
-       // public ActionResult Save(Movie moviein)
-
-            //this object posted in has to be called movie, changing it breaks it - gives null object
-            //I think the object in teh viewmodel, the form, and the object passed in must be teh same as teh object name - e.g. Movie movie all the way through
-            //have a look in the Post request to see details
-       [HttpPost]
+        #region comments
+        //this object posted in has to be called movie, changing it breaks it - gives null object
+        //I think the object in teh viewmodel, the form, and the object passed in must be teh same as teh object name - e.g. Movie movie all the way through
+        //have a look in the Post request to see details
+        #endregion
+        [HttpPost]
        public ActionResult Save (Movie movie)
         {
             if (movie.Id == 0)
@@ -160,6 +86,7 @@ namespace VidlyDec2018.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Movies");
 
+            #region comments
 
             /*
             if (movieViewModelIn.SingleMovie.Id == 0)
@@ -229,6 +156,7 @@ namespace VidlyDec2018.Controllers
         {
             return Content("id=" + id); 
              */
+            #endregion
         }
 
 
@@ -256,7 +184,7 @@ namespace VidlyDec2018.Controllers
 
         public ActionResult Details(int id)
         {
-            //singleOrDefautl also queries database immediately, not in iterator in view
+            //singleOrDefautl also queries database immediately, not in iterator in view... which accesses the database as and when, thud, it is eager loading
             var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
             if (movie == null)
             {
@@ -271,7 +199,7 @@ namespace VidlyDec2018.Controllers
         {
             var ranMovie = new Movie() {Name = "Shrek!", Id = 1};
 
-
+            #region comments
             //return Content("Hello World"); //overwrites content
             //return HttpNotFound("not found error here"); //standard http 404 error screen
             // return new EmptyResult(); //responds with an empty result
@@ -299,7 +227,7 @@ namespace VidlyDec2018.Controllers
             //var ranMovie = new Movie() { Name = "Shrek!", Id = 1 };
             //return View(ranMovie);
 
-            
+            #endregion
             var customers = new List<Customer>
             {
                 new Customer{Name = "Customer 1"},
@@ -317,13 +245,9 @@ namespace VidlyDec2018.Controllers
         
     }
 
-        public void InitializeMovieFormViewModel()
-        {
+  
 
-        }
-
-        
-
+        #region comments
         //movies
         //to make a parameter optional, you make it nullable... with the ?
         //sortBy is a string type = reference type = already nullable
@@ -332,23 +256,25 @@ namespace VidlyDec2018.Controllers
         //would be called e.g. Movies?pageIndex=5&sortBy=Date
 
 
-            /*
-        public ActionResult Index(int? pageIndex, string sortBy)
+        /*
+    public ActionResult Index(int? pageIndex, string sortBy)
+    {
+        if (!pageIndex.HasValue)
         {
-            if (!pageIndex.HasValue)
-            {
-                pageIndex = 1;
-            }
-
-            if (string.IsNullOrWhiteSpace(sortBy))
-            {
-                sortBy = "Name";
-            }
-
-            return Content(String.Format("pageIndex={0}&sortby={1}", pageIndex, sortBy));
+            pageIndex = 1;
         }
-        */
 
+        if (string.IsNullOrWhiteSpace(sortBy))
+        {
+            sortBy = "Name";
+        }
+
+        return Content(String.Format("pageIndex={0}&sortby={1}", pageIndex, sortBy));
+    }
+    */
+        #endregion
+
+        #region methodnotneeded
         //mvcaction4 - tab - code snippet for Action Result... doesn't work
         //44mins in vid to get this route
         [Route("movies/released/{year}/{month:regex(\\d{2}):range(1, 12)}")]
@@ -356,9 +282,9 @@ namespace VidlyDec2018.Controllers
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
-        } 
+        }
+        #endregion
 
-        
-        
+
     }
 }

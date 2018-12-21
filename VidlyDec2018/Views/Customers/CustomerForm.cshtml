@@ -5,7 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New Customer</h2>
+@{
+    if (Model.Customer == null)
+    {
+        <h2>New Customer</h2>
+    }
+    else
+    {
+        <h2>Edit Customer</h2>
+    }
+}
+
 
 @* Create = action that should be called when form submitted (POST HTTP request), Customers is the controller*@
 @*@Html.BeginForm  returns a dispolable object, so Usign will dispose of it for us, means EndForm tag doesnt need to be added*@
@@ -18,21 +28,24 @@
         @*@Html.LabelFor(m => m.Name)*@
         <label for="Name"> Customer.Name </label>
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
     </div>
 
+    //a byte without being nullable (?) is implicitly required
     @*second argument is extra parameter, formats the string so you don't see the time as well as teh data from the DateTime object  *@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Birthdate)
         @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
     </div>
 
-
+    
 
 
     @*arguments for SelectList: model for combobox to use, name or property that holds the value for each item - index in teh INumerable I think, name of the property that holds teh strign name to be displayed), top element to be displayed, usual form-control class *@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MemberShipTypeId)
         @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MemberShipTypeId, "A membership type is required")
     </div>
 
     <div class="checkbox">
@@ -40,7 +53,7 @@
             @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
         </label>
     </div>
-    
+
     @Html.HiddenFor(m => m.Customer.Id)
 
     <div>
