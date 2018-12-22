@@ -10,11 +10,11 @@ namespace VidlyDec2018.Models
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            //1 below is a magic number... meanign it has little meanign ineth context it is beign used, as it is an index in teh DB of the MembershipType, but that is not clear in this context
+            //1 below is a magic number... meaning it has little meaning in the context it is being used, as it is an index in the DB of the MembershipType, but that is not clear in this context
             var customer = (Customer)validationContext.ObjectInstance;
 
-            //return success if validation si OK, else create a new instance of ValidationResult, passing teh error mesage as teh arg
-            if (customer.MemberShipTypeId == 0 || customer.MemberShipTypeId == 1)
+            //return success if validation is OK, else create a new instance of ValidationResult, passing the error message as the arg
+            if (customer.MemberShipTypeId == MembershipType.Unknown || customer.MemberShipTypeId == MembershipType.PayAsYouGo)
             {
                 return ValidationResult.Success;
             }

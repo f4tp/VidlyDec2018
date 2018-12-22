@@ -73,6 +73,7 @@ namespace VidlyDec2018.Controllers
             var membershiptypes = _context.MembershipTypes.ToList();
             var viewModel = new ViewModels.Customers.CustomerFormViewModel
             {
+                //initializing the customer here will initialize properties with their default values, so no null object errors found later
                 Customer = new Customer(),
                 MembershipTypes = membershiptypes
             };
@@ -82,6 +83,7 @@ namespace VidlyDec2018.Controllers
         //thsi only allows this method to be called with a Post HTTP request, not a get
         //public ActionResult Save(ViewModels.Customers.CustomerFormViewModel viewModel)
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
             //Model>State.IsValid - detects whether the Model passed in meets the valdiation rules set in the class
@@ -95,7 +97,7 @@ namespace VidlyDec2018.Controllers
                     Customer = customer,
                     MembershipTypes = _context.MembershipTypes.ToList()
                 };
-                //if the view is not valid / the object doesn't meet teh validation rules,
+                //if the view is not valid / the object doesn't meet the validation rules,
                 //return the same view with teh updated model, to keep them on it with teh valdiaton error essages
                 return View("CustomerForm", viewModel);
             }
