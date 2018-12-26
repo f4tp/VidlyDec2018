@@ -26,29 +26,29 @@
 }
 
 
-<table>
-    <thead>
-        <tr>
-            <th>Movies</th>
-            <th>Genre</th>
-        </tr>
-    </thead>
+    <table id="movies" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Movies</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        
-        
-        @foreach (var movie in Model)
+        <tbody>
+
+
+            @foreach (var movie in Model)
         {
             <tr>
                 @*<td>@Html.Action(movie.Name, "Movies")</td>*@
-                
+
                 <td>@Html.ActionLink(movie.Name, String.Format("/Edit/{0}", movie.Id), "Movies")</td>
 
                 <td>@movie.Genre.Id</td>
-                
-            </tr>
-        }
-            
-    </tbody>
 
-</table>
+            </tr>
+    }
+
+        </tbody>
+
+    </table>

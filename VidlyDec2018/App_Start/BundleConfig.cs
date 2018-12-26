@@ -8,8 +8,17 @@ namespace VidlyDec2018
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            //this is now called lib, script reference has been added to teh bottom of layout shared html
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                        "~/Scripts/jquery-{version}.js",
+                         "~/Scripts/bootstrap.js",
+                      //below was added when used package manager to install package-install bootbox -version 4.3.0
+                      "~/Scripts/bootbox.js",
+                      "~/Scripts/respond.js",
+                      //below are required for data tables... also need to datatables style sheet to CSS bundle below
+                      "~/Scripts/datatables/jquery.datatables.js",
+                      "~/Scripts/datatables/datatables/bootstrap.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -19,13 +28,22 @@ namespace VidlyDec2018
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            /*
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      //below was added when used package manager to install package-install bootbox -version 4.3.0
+                      "~/Scripts/bootbox.js",
                       "~/Scripts/respond.js"));
+           */
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                //was -lumen
                       "~/Content/bootstrap-lumen.css",
-                      "~/Content/site.css"));
+                      //added below for datatables css
+                      //these make datatables look like the bootstrap tables
+                      "~/Content/dataTables/css/datatables.bootstrap.css",
+                      "~/Content/site.css"
+                      ));
         }
     }
 }

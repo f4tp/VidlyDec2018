@@ -18,11 +18,12 @@
 
 
 
-<table>
+<table id="customers" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Customer</th>
             <th>Membership Type</th>
+            <th>Delete</th>
         </tr>
     </thead>
 
@@ -31,6 +32,11 @@
         {
             <tr>
                 <td>@Html.ActionLink(customer.Name, String.Format("/Edit/{0}", customer.Id), "Customers")</td>
+                <td>@customer.MebershipType.Name</td>
+                <td>
+                    <button data-customer-id="@customer.Id" class="btn-link js-delete"> Delete </button>
+
+                </td>
 
                 @*old one below*@
                 @*<td>@Html.ActionLink(customer.Name, String.Format("/Details/{0}", customer.Id), "Customers")</td>*@
@@ -42,12 +48,63 @@
                 *@
                 @* below would cause an exception, as only customer objects have been loaded from DB, not related tables / data from*@
                 @*customer is data from one table .MembershipType is the foreign key, .Discount rate is in another table, % is plain text*@
-                <td>@customer.MebershipType.Name</td>
+
             </tr>
         }
     </tbody>
 
 </table>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            //below makes the table, with the id of 'customers', into a datatable
+            $("#customers").DataTable();
+
+            //this code has been refactored by the program, it was originally as below, which took up more memoery (each click event handler needed its own space in RAM, whereas now it shares one location to handle this)
+            //$("#customers .js-delete").on("click", function () {
+            $("#customers").on("click", ".js-delete", function deleteCustomer () {
+                var button = $(this);
+                
+                bootbox.confirm("Sure you want to delete?", function (result) {
+                    //if result has a truthy value (which means it is not null or undefined)
+                    
+                    if (result) {
+                        $.ajax({
+                            //this has to be button.attr instead of $(this).attr..// caused an undefined error
+                            url: "/api/customers/" + button.attr("data-customer-id"),
+                            method: "DELETE",
+                            success: function () {
+                                button.parents("tr").remove();
+                                //Console.Log("yes");
+                            }
+                        });
+                    }
+                });
+                
+                //below is standard way to do it, without bootbox / jQuery aesthetic confirm box
+
+                /*
+                if (confirm("Are you sure you want to delete?")) {
+                    
+                    //if confirm result is true, call our APi usign jQuery Ajax
+                    $.ajax({
+                        url: "/api/customers/" + $(this).attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function () {
+                            //console.log("Success");
+                            //on successful deletion, this then deletes the table row which held the record from the database
+                            // var button below is a variable which holds a reference to the button which fired the veent, and it deletes it's parent (the tr it is held in" within the DOM)
+                            button.parents("tr").remove();
+                        }
+                    });
+                }
+                */
+                
+            });
+        });
+    </script>
+}
 
 
 
