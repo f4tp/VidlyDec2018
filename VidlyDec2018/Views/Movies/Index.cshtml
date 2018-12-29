@@ -31,6 +31,7 @@
             <tr>
                 <th>Movies</th>
                 <th>Genre</th>
+                <th>Delete</th>
             </tr>
         </thead>
 
@@ -45,6 +46,7 @@
                 <td>@Html.ActionLink(movie.Name, String.Format("/Edit/{0}", movie.Id), "Movies")</td>
 
                 <td>@movie.Genre.Id</td>
+                <td> <button data-movie-id="@movie.Id" class="btn-link js-delete">Delete</button></td>
 
             </tr>
     }
@@ -52,3 +54,32 @@
         </tbody>
 
     </table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#movies").on("click", ".js-delete", function () {
+                var buttonClicked = $(this);
+
+                bootbox.confirm("are you sure you want to delete this movie", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/movies/" + buttonClicked.attr("data-movie-id"),
+                            method: "DELETE",
+                            success: function () {
+                                buttonClicked.parents("tr").remove();
+                            }
+                        })
+                    }
+                });
+
+
+            });
+        });
+
+    </script>
+
+
+}

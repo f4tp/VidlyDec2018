@@ -19,6 +19,10 @@ namespace VidlyDec2018.Models.Dto
         //public MembershipType MebershipType { get; set; }
         //Also, display attributes are not needed
 
+            //instead we need a Dto variant of MembershipType
+
+        public MembershipTypeDto MembershipType { get; set; }
+
         public byte MemberShipTypeId { get; set; }
         //[MinYearsIfAMember]
         public DateTime? Birthdate { get; set; }

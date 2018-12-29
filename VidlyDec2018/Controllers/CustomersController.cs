@@ -31,7 +31,7 @@ namespace VidlyDec2018.Controllers
         //[Route("Customers/AllCustomers")]
         public ActionResult Index()
         {
-            //witrhout .ToList, the database is not queried until the for each iterator in the view
+            //without .ToList, the database is not queried until the for each iterator in the view
             //var customers = _context.Customers;
 
             //adding .ToList ensures querying of DB is done when this line is executed
@@ -41,8 +41,16 @@ namespace VidlyDec2018.Controllers
             //Include(c +>).. etc method is eager loading
             //above needs Using Data.System.Entity
             //eager loading - load all data you want, including related data in other tables
+
+
+
+            // below is the proper code, but has been taken out as we are making a call to the API and getting the customers this way now
+
+            /*
             var customers = _context.Customers.Include(c => c.MebershipType ).ToList();
             return View(customers);
+            */
+            return View();
 
             #region internal data, not db
             /*

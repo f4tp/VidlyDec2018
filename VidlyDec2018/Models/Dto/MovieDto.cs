@@ -13,7 +13,9 @@ namespace VidlyDec2018.Models.Dto
         public int Id { get; set; }
         [Required(ErrorMessage = "The movie's name is required")]
         public String Name { get; set; }
-        public Genre Genre { get; set; }
+        //public Genre Genre { get; set; }
+
+        public GenreDto GenreDto { get; set; }
         [Required(ErrorMessage = "Please select a genre")]
         public int GenreId { get; set; }
         [Required(ErrorMessage = "Please update when the movie was released")]

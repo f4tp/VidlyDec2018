@@ -87,6 +87,7 @@ namespace VidlyDec2018.Controllers.Api
         [HttpDelete]
         public void DeleteMovie(int id)
         {
+            
             var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movieInDb == null)

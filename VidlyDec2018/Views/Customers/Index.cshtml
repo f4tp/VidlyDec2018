@@ -14,6 +14,9 @@
     <div>
         <button type="submit" class="btn btn-primary"> New Customer </button>
     </div>
+    <p>
+         
+    </p>
 }
 
 
@@ -28,6 +31,9 @@
     </thead>
 
     <tbody>
+
+        @*this for each contains call to the MVC app, now it is calling the app using the API with the jQuery stuff below*@
+        @*
         @foreach (var customer in Model)
         {
             <tr>
@@ -38,19 +44,25 @@
 
                 </td>
 
-                @*old one below*@
-                @*<td>@Html.ActionLink(customer.Name, String.Format("/Details/{0}", customer.Id), "Customers")</td>*@
-
-                @*video variant didn't work for me*@
-                @*<td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id })</td>*@
-                @* alternative way of the above
-                    <td>@Html.ActionLink(customer.Name, "Details", new { id = customer.Id }, null)</td>
-                *@
-                @* below would cause an exception, as only customer objects have been loaded from DB, not related tables / data from*@
-                @*customer is data from one table .MembershipType is the foreign key, .Discount rate is in another table, % is plain text*@
-
             </tr>
+
+            //below should be in between tr tags
+                @*old one below*@
+        @*<td>@Html.ActionLink(customer.Name, String.Format("/Details/{0}", customer.Id), "Customers")</td>*@
+
+        @*video variant didn't work for me*@
+        @*<td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id })</td>*@
+        @* alternative way of the above
+        <td>@Html.ActionLink(customer.Name, "Details", new { id = customer.Id }, null)</td>
+        *@
+        @* below would cause an exception, as only customer objects have been loaded from DB, not related tables / data from*@
+        @*customer is data from one table .MembershipType is the foreign key, .Discount rate is in another table, % is plain text*@
+
+
+        @*
         }
+
+            bracket for foreach loop *@
     </tbody>
 
 </table>
@@ -59,7 +71,34 @@
     <script>
         $(document).ready(function () {
             //below makes the table, with the id of 'customers', into a datatable
-            $("#customers").DataTable();
+           var table = $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    dataSrc:""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>"
+
+                        }
+                    },
+                    {
+                        //should be membershipType
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>"
+                        }
+                    }
+                    
+
+                ]
+
+            });
 
             //this code has been refactored by the program, it was originally as below, which took up more memoery (each click event handler needed its own space in RAM, whereas now it shares one location to handle this)
             //$("#customers .js-delete").on("click", function () {
@@ -75,8 +114,11 @@
                             url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
-                                //Console.Log("yes");
+                                //the below only removes from teh table, it still exists on teh client - through search function (although not on the server / database anymore as DELETE http request gone through) 
+                                
+                                //button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
+
                             }
                         });
                     }

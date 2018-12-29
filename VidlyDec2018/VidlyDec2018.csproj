@@ -312,10 +312,16 @@
     <Compile Include="Migrations\201812221134463_FixPrePopFormByEditingMovieViewModelAndController.Designer.cs">
       <DependentUpon>201812221134463_FixPrePopFormByEditingMovieViewModelAndController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812291357341_UpdateGenreDtoMovieDto.cs" />
+    <Compile Include="Migrations\201812291357341_UpdateGenreDtoMovieDto.Designer.cs">
+      <DependentUpon>201812291357341_UpdateGenreDtoMovieDto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dto\CustomerDto.cs" />
+    <Compile Include="Models\Dto\GenreDto.cs" />
+    <Compile Include="Models\Dto\MembershipTypeDto.cs" />
     <Compile Include="Models\Dto\MovieDto.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -662,6 +668,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812221134463_FixPrePopFormByEditingMovieViewModelAndController.resx">
       <DependentUpon>201812221134463_FixPrePopFormByEditingMovieViewModelAndController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291357341_UpdateGenreDtoMovieDto.resx">
+      <DependentUpon>201812291357341_UpdateGenreDtoMovieDto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

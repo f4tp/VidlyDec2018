@@ -16,8 +16,14 @@ namespace VidlyDec2018.App_Start
             //Dto uses reflection here,m to see details of the type at runtime, and use this to map one to the other
             Mapper.CreateMap<Customer, CustomerDto>();
             Mapper.CreateMap<CustomerDto, Customer>();
+
+            Mapper.CreateMap<MembershipType, MembershipTypeDto>();
+            
+
             Mapper.CreateMap<Movie, MovieDto>();
             Mapper.CreateMap<MovieDto, Movie>().ForMember(m => m.Id, opt => opt.Ignore());
+            Mapper.CreateMap<Genre, GenreDto>();
+
         }
     }
 }

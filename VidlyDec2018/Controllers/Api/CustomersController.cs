@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using VidlyDec2018.Models;
 using VidlyDec2018.Models.Dto;
+
 
 
 //the API has been changed... it was first being passed in domain model objects (e.g. Customer), but instead, the data transfer object (DTO) has been used which reduced e.g. security issues
@@ -28,9 +30,16 @@ namespace VidlyDec2018.Controllers.Api
         public IEnumerable<CustomerDto> GetCustomers()
         {
 
-            
+
             //after Map<Customer, CustomerDto> .. where dots would have been parentheses, these have been missed so the method is not called, instead it will use a delegate... a reference to this method
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            //below is for when customers were being returned through MVC and not through the API
+            //return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+
+            var customerDtos = _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+            return customerDtos;
         }
 
 
