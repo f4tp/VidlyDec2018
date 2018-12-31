@@ -11,6 +11,7 @@ using VidlyDec2018.Models.Dto;
 
 namespace VidlyDec2018.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : ApiController
     {
 

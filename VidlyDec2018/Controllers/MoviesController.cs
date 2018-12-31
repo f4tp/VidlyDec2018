@@ -13,6 +13,7 @@ using VidlyDec2018.ViewModels.Movies;
 
 namespace VidlyDec2018.Controllers
 {
+    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : Controller
     {
 
@@ -66,7 +67,7 @@ namespace VidlyDec2018.Controllers
            
         }
 
-        [Authorize(Roles = RoleName.CanManageMovies)]
+        //[Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             Movie movie = new Movie();

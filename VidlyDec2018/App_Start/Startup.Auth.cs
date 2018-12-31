@@ -53,10 +53,23 @@ namespace VidlyDec2018
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+
+/*
+
+//@@@@@@@@@@@ uncommented for facebook OAuth @@@@@@@@@@@@@@@@
+//don't update GitHub with secret here
+
+            app.UseFacebookAuthentication(
+               appId: "279755266027331",
+               //appSecrteTakenOut, create another one . get the existing one at developers.facebook.com
+               appSecret: "");
+*/
+
+
+
+
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
