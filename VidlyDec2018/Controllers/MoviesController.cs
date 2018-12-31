@@ -34,9 +34,10 @@ namespace VidlyDec2018.Controllers
         //[Route("Movies/AllMovies")]
         public ActionResult Index()
         {
-
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
-            return View(movies);
+            //the index page is now populated by making a call to the API, rather than using the MVC variant
+            //var movies = _context.Movies.Include(m => m.Genre).ToList();
+            //return View(movies);
+            return View();
 
            
         }

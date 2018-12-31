@@ -74,11 +74,15 @@
            var table = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
+                    //datasource is not an object returned from the api with headers for that object, but an array of objects instead - without propertie sin header, so string is left empty, if one object - it might have been 'count = 10, 'customers: [...]'
                     dataSrc:""
-                },
+               },
+               //columns is an array, hence square brackets
                 columns: [
                     {
+                        //name is a header in the api object passed in, remember, it is in camelCase
                         data: "name",
+                         //function is needed here because the name property needs a hyperlink adding to take you to that customer
                         render: function (data, type, customer) {
                             return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>"
 

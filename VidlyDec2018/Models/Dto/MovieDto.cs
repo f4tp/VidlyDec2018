@@ -15,7 +15,7 @@ namespace VidlyDec2018.Models.Dto
         public String Name { get; set; }
         //public Genre Genre { get; set; }
 
-        public GenreDto GenreDto { get; set; }
+        public GenreDto Genre { get; set; }
         [Required(ErrorMessage = "Please select a genre")]
         public int GenreId { get; set; }
         [Required(ErrorMessage = "Please update when the movie was released")]

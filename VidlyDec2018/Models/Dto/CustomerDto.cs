@@ -21,6 +21,7 @@ namespace VidlyDec2018.Models.Dto
 
             //instead we need a Dto variant of MembershipType
 
+            //name here matters as it will use to connect to a field in teh DB, cannot be e.g. MembershiptypeDto, name has to be MembershipType
         public MembershipTypeDto MembershipType { get; set; }
 
         public byte MemberShipTypeId { get; set; }
