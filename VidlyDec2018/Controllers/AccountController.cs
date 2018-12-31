@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VidlyDec2018.Models;
@@ -155,6 +156,25 @@ namespace VidlyDec2018.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+
+                    /*
+                    
+                    //TEMP CODE - delete later - this adds all newly added people as store managers - a role with a high degree of responsibility . authorisation within the program, used just to seed the database with multiple store managers
+
+
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("CanManageMovies"));
+                    await UserManager.AddToRoleAsync(user.Id, "CanManageMovies");
+
+                    ////////////////// code to delete ends here /////////////////
+
+                    */
+
+
+
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

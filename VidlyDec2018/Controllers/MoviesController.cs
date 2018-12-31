@@ -37,11 +37,36 @@ namespace VidlyDec2018.Controllers
             //the index page is now populated by making a call to the API, rather than using the MVC variant
             //var movies = _context.Movies.Include(m => m.Genre).ToList();
             //return View(movies);
-            return View();
+
+            //edited for roles
+            /*
+            if (User.IsInRole("CanManageMovies"))
+            {
+                return View("List");
+            }
+            else
+            {
+                return View("ReadOnlyList");
+            }
+            */
+
+            //below is the shorthand version of the
+
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
+
+            return View("ReadOnlyList");
+
+
+
+            //return View();
+
+            
 
            
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             Movie movie = new Movie();
