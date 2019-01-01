@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web;
 using System.Web.Mvc;
 using VidlyDec2018.Models;
@@ -50,7 +51,20 @@ namespace VidlyDec2018.Controllers
             var customers = _context.Customers.Include(c => c.MebershipType ).ToList();
             return View(customers);
             */
+
+            //using System.Runtime.Caching... to find this, right click References in SOl Exlpo, add reference, search for it
+            //again only use this after performance testing the app
+            if (MemoryCache.Default["Genres"] == null)
+            {
+                MemoryCache.Default["Genres"] = _context.Genres.ToList();
+            }
+            else
+            {
+                var genres = MemoryCache.Default["Genres"] as IEnumerable<Genre>;
+            }
+
             return View();
+
 
             #region internal data, not db
             /*
