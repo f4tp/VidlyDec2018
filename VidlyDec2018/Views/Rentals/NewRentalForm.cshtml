@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "NewRentalForm";
+    @*layout is set in another file (Views > ViewStart) rather than here *@
+    @* this is done by default so can delete the line of code from here... as I have done *@
+}
+
+<h2>NewRentalForm</h2>
+
+@* there are three main ways to do forms... <form> is raw HTML, Html.BeginForm is MVC, @Ajax.BeginForm is also MVC, use standard HTML form to call API rather than MVC*@
+
+<form>
+    @*I had to install ZenCoding extension to get the tab shortcut to work here, even though I had web essentials installed*@
+    <div class="form-group">
+        <label>Customer</label>
+        <div class="tt-container">
+            <input id="customerTextbox" type="text" value="" class="form-control" />
+        </div>
+        
+    </div>
+
+    @*Zen coding example for the below form...*@
+    @*div.form-group>label+input[type='text'].form-control*@
+    <div class="form-group">
+        <label>Movie</label>
+        <div class="tt-container">
+            <input id="movieTextBox" type="text" value="" class="form-control" />
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="movies" class="list-group"></ul>
+        </div>
+    </div>
+    
+
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            //Customer Textbox Type Ahead
+
+
+            //this variable - vm stands for view modle... as in a view model on the client, it is initialised as a blank model using {};, it will hold the customer / customer name? when one has been sleected from the typeahead text box
+            var vm = {
+                movieIds: []
+
+            };
+            var customersBHound = new Bloodhound({
+                //'value' changed to 'name' as customers have a name, not a value
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                //
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                //prefetch initialses system from an intiial APi call
+                //prefetch: '../data/films/post_1960.json',
+                remote: {
+                    url: '../api/customers/?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#customerTextbox').typeahead({
+                minLength: 3,
+                highlight: true,
+            },
+                {
+                name: 'customers',
+                display: 'name',
+                source: customersBHound
+                }).on("typeahead:select", function (e, customer) {
+                    vm.customerId = customer.Id;
+
+                });
+
+
+
+            //Movie textbox Type ahead
+
+
+            //var vmMov = {};
+            var moviesBHound = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+               
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                
+                remote: {
+                    url: '../api/movies/?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#movieTextBox').typeahead({
+                minLength: 2,
+                highlight: true,
+            },
+                {
+                    name: 'movies',
+                    display: 'name',
+                    source: moviesBHound
+                }).on("typeahead:select", function (e, movie) {
+                    $("#movies").append("<li class='list-group-item'>" + movie.name + "</li>");
+                    //vmMov.movieId = movie.Id;
+
+                    $("#movieTextBox").typeahead("val", "");
+                    vm.movieIds.push(movie.id);
+
+                });
+
+
+        });
+
+        //task - set up type ahead on the movie text box
+    </script>
+    
+}
+
