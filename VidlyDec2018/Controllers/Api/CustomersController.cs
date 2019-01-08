@@ -27,16 +27,23 @@ namespace VidlyDec2018.Controllers.Api
             _context = new ApplicationDbContext();
         }
         //  GET / api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        //adding = null to parameter makes it optional
+        public IEnumerable<CustomerDto> GetCustomers(string query = null)
         {
+
 
 
             //after Map<Customer, CustomerDto> .. where dots would have been parentheses, these have been missed so the method is not called, instead it will use a delegate... a reference to this method
             //below is for when customers were being returned through MVC and not through the API
             //return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
 
-            var customerDtos = _context.Customers
-                .Include(c => c.MembershipType)
+            var customersQuery = _context.Customers
+                .Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+         
+            var customerDtos = customersQuery
                 .ToList()
                 .Select(Mapper.Map<Customer, CustomerDto>);
             return customerDtos;
