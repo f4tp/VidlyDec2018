@@ -9,7 +9,7 @@
 
 @* there are three main ways to do forms... <form> is raw HTML, Html.BeginForm is MVC, @Ajax.BeginForm is also MVC, use standard HTML form to call API rather than MVC*@
 
-<form>
+<form id="newRental">
     @*I had to install ZenCoding extension to get the tab shortcut to work here, even though I had web essentials installed*@
     <div class="form-group">
         <label>Customer</label>
@@ -49,6 +49,7 @@
 
             //this variable - vm stands for view modle... as in a view model on the client, it is initialised as a blank model using {};, it will hold the customer / customer name? when one has been sleected from the typeahead text box
             var vm = {
+                //customerId,
                 movieIds: []
 
             };
@@ -74,7 +75,10 @@
                 display: 'name',
                 source: customersBHound
                 }).on("typeahead:select", function (e, customer) {
-                    vm.customerId = customer.Id;
+                    //vm.customerId = customer.id NOT customer.Id.. capital breaks it for some reason
+                    //also - the property name in vm must be the same as in NewRentalsController.cs, otherwise then we create a new rental, the movieId = null.. the case doesn't matter here though
+
+                    vm.customerId = customer.id;
 
                 });
 
@@ -111,7 +115,23 @@
                     vm.movieIds.push(movie.id);
 
                 });
+            $("#newRental").submit(function (e) {
+                //without the preventdefault you will have tranditional HTML form, not what we want
+                e.preventDefault();
 
+                $.ajax({
+                    url: "/api/rentals",
+                    method: "post",
+                    data: vm
+                })
+                    .done(function () {
+                        console.log("done")
+                        
+                    })
+                    .fail(function () {
+                        console.log("failed")
+                    });
+            });
 
         });
 

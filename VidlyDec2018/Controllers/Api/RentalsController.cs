@@ -36,7 +36,8 @@ namespace VidlyDec2018.Controllers.Api
         }
         */
 
-        //POST  api/rental
+        //POST  api/rentals
+        //url above is different to video, they called their controller NewRentalsController, so theirs is api/newrentals
         [HttpPost]
         public IHttpActionResult CreateRental(RentalDto rental)
         {

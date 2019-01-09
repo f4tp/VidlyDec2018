@@ -23,14 +23,23 @@ namespace VidlyDec2018.Controllers.Api
         }
 
         //  GET /api/movies
-        public IEnumerable<MovieDto> GetMovies()
+        public IEnumerable<MovieDto> GetMovies(string query = null)
         {
-            //old one for MVC rather than API, does nto eager load
+            //old one for MVC rather than API, does not eager load
             //return _context.Movies.ToList().Select(Mapper.Map<Movie, MovieDto>);
-            return _context.Movies
+            //only fetching and displaying movies in stock now as NumberAvailable > 0 added
+            var moviesquery = _context.Movies
                 .Include(m => m.Genre)
+                .Where(m => m.NumberAvailable > 0);
+            if (!String.IsNullOrWhiteSpace(query))
+                moviesquery = moviesquery.Where(m => m.Name.Contains(query));
+            
+
+            var moviesDto = moviesquery
                 .ToList()
                 .Select(Mapper.Map<Movie, MovieDto>);
+
+            return moviesDto;
         }
 
         //  GET api/movies/1

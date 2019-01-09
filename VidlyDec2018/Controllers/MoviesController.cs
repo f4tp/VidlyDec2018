@@ -108,7 +108,9 @@ namespace VidlyDec2018.Controllers
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;
+                movie.NumberAvailable = movie.NumberInStock;
                 _context.Movies.Add(movie);
+                
             }
             else
             {
@@ -116,6 +118,7 @@ namespace VidlyDec2018.Controllers
 
                 movieInDB.Name = movie.Name;
                 movieInDB.NumberInStock = movie.NumberInStock;
+                
 
                 movieInDB.GenreId = movie.GenreId;
                 //Genre object is not in the DB, only the ID
