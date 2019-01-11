@@ -18,7 +18,8 @@ namespace VidlyDec2018
                       //below are required for data tables... also need to datatables style sheet to CSS bundle below
                       "~/Scripts/datatables/jquery.datatables.js",
                       "~/Scripts/datatables/datatables/bootstrap.js",
-                      "~/Scripts/typeahead.bundle.js"
+                      "~/Scripts/typeahead.bundle.js",
+                      "~/Scripts/toastr.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -44,6 +45,7 @@ namespace VidlyDec2018
                       //these make datatables look like the bootstrap tables
                       "~/Content/dataTables/css/datatables.bootstrap.css",
                       "~/Content/typeahead.css",
+                      "~/Content/toastr.css",
                       "~/Content/site.css"
                       
                       ));
