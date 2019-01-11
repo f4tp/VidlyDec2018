@@ -14,7 +14,8 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input id="customerTextbox" required type="text" value="" class="form-control" />
+            @*jQueryVal looks for validation rules that start with data-rule-NAME*@
+            <input id="customerTextbox" data-rule-validCustomer="true" required type="text" value="" class="form-control" />
         </div>
         
     </div>
@@ -119,14 +120,17 @@
                 });
 
             $.validator.addMethod("validCustomer", function () {
-
-            });
+                return vm.customerId && vm.customerId !== 0;
+            },
+                "Please select a valid customer"
+            );
 
 
             $("#newRental").validate({
                 submitHandler: function () {
                     //without the preventdefault you will have tranditional HTML form, not what we want
-                    e.preventDefault();
+                    //but once you have moved this routine into the .validate routine, and not teh .submit routine, you no longer provide 2 as an arg, so this stops working...commented out after video 126, might need to add e args back in later?
+                    //e.preventDefault();
 
                     $.ajax({
                         url: "/api/rentals",
