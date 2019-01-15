@@ -1,0 +1,70 @@
+﻿@model VidlyDec2018.ViewModels.Movies.MovieFormViewModel
+@{
+    ViewBag.Title = "MovieForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (Model.Id == 0)
+    {
+        <h2>New Movie</h2>
+    }
+    else
+    {
+        <h2>Edit Movie</h2>
+    }
+}
+
+
+
+@using (Html.BeginForm("Save", "Movies"))
+{
+
+    @Html.ValidationSummary(true, "Please see the errors below:")
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+
+    @*"{0:d MMM yyyy}"*@
+    <div class="form-group">
+        @Html.LabelFor(m => m.ReleaseDate)
+        @Html.TextBoxFor(m => m.ReleaseDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ReleaseDate)
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.GenreId)
+        @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.GenreId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.NumberInStock)
+        @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberInStock)
+    </div>
+
+    //below is one way to solve the prepopulation of the text boxes on teh form / customer null errors going forward, but it is not the best way
+    //@Html.Hidden("Movie.Id", (Model.Movie != null) ? Model.Movie.Id : 0)
+    @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
+
+    <div>
+        <button type="submit" class="btn btn-primary"> Save </button>
+    </div>
+
+
+
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

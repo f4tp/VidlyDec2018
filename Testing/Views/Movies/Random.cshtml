@@ -1,0 +1,44 @@
+﻿@*
+    @using VidlyDec2018.Models
+*@
+
+
+@model VidlyDec2018.ViewModels.RandomMovieViewModel
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var className = Model.CustomersList.Count > 0 ? "popular" : null;
+}
+
+
+<h2 class="@className"> @Model.MovieSet.Name</h2>
+
+@if (Model.CustomersList.Count == 0)
+{
+    <text> No one has rented this movie before</text>
+}
+else
+{
+    <ul>
+        @foreach (var customer in Model.CustomersList)
+        {
+            <li>@customer.Name </li>
+        }
+    </ul>
+}
+
+<!-- METHOD 1 ACTION-->
+<!-- old way of passing data in below-->
+<!--  <h2>Model.Name</h2>     -->
+<!--METHOD 2 ACTION-->
+<!-- new way below-->
+<!-- much more confusing, -->
+<!-- and also...if you change the name in the method... it is a string literal here so you need to remember to change it also-->
+<!-- using statement required also at the top of the page-->
+<!--<h2>//(((Movie)ViewData["Movie"]).Name)</h2> -->
+<!--METHOD 3 ACTION-->
+<!-- just as conusing as method 2-->
+<!-- h2> //ViewBag.RandomMovie </h2> -->
+<!-- BEST OFF USING METHOD 1-->

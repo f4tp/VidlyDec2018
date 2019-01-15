@@ -1,0 +1,89 @@
+﻿@*@model VidlyDec2018.Models.Customer*@
+@model VidlyDec2018.ViewModels.Customers.CustomerFormViewModel
+
+@* CSRF - to stop this, we make sure that the server only accepts requests from this form only.... see the AntiForgeyTOken below to stop thus*@
+
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (Model.Customer.Id == 0)
+    {
+        <h2>New Customer</h2>
+    }
+    else
+    {
+        <h2>Edit Customer</h2>
+    }
+}
+
+
+@* Create = action that should be called when form submitted (POST HTTP request), Customers is the controller*@
+@*@Html.BeginForm  returns a disposable object, so Using will dispose of it for us, means EndForm tag does not need to be added*@
+@*adding the model pulls data validation down from the class, e.g. Customer class > 255 characters for Name text box.. a form of validation in itself*@
+@*form-control is bootstrap *@
+
+@using (Html.BeginForm("Save", "Customers"))
+{
+
+    //below gives a summary at the top of the page, of all validation errors that exist
+    @Html.ValidationSummary()
+
+    //can also use...
+    //@Html.ValidationSummary(true, "Please see the errors below:")
+
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Name)*@
+        <label for="Name"> Customer.Name </label>
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
+    </div>
+
+    @*arguments for SelectList: model for combo box to use, name or property that holds the value for each item - index in the INumerable I think, name of the property that holds the string name to be displayed), top element to be displayed, usual form-control class *@
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.MemberShipTypeId)
+        @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MemberShipTypeId, "A membership type is required")
+    </div>
+
+
+    //a byte without being null-able (?) is implicitly required
+    @*second argument is extra parameter, formats the string so you don't see the time as well as the data from the DateTime object  *@
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Birthdate)
+        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Birthdate)
+    </div>
+
+
+
+
+
+
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
+        </label>
+    </div>
+
+    @Html.HiddenFor(m => m.Customer.Id)
+    @*below stops CSRF*@
+    @*needs on teh Save method also, [ValidateAntiForgeryToken] *@
+    @Html.AntiForgeryToken()
+    <div>
+        <button type="submit" class="btn btn-primary"> Save </button>
+    </div>
+
+
+}
+
+
+@*adding this script means validation is run at the client side, not at the server side... you don't have to use any different code to what is in MVC framework / what is taught in the course, just enables it using this... ASP.Net uses validation annotations (e.g. [Required]) at server side and client side... the form coming across from the server looks at the attribute tags, and the razor form creates HTML with extra HTML with this in, it is this that is used to check validation rules at client side... however you cannot use it with custom validation attribute tags like we have created... to do that, you have to write some jQuery to do it*@
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    

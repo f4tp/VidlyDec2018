@@ -1,0 +1,31 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Vidly", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @*Action name | controller | *@
+                <li>@Html.ActionLink("Rentals", "New", "Rentals")</li>
+                <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
+            </ul>
+
+            @* had to add this back in for authentication*@
+            @Html.Partial("_LoginPartial")
+
+            @*
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+            </ul>
+            *@
+
+        </div>
+    </div>
+</div>

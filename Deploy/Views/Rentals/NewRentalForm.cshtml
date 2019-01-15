@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "NewRentalForm";
+    @*layout is set in another file (Views > ViewStart) rather than here *@
+    @* this is done by default so can delete the line of code from here... as I have done *@
+}
+
+<h2>NewRentalForm</h2>
+
+@* there are three main ways to do forms... <form> is raw HTML, Html.BeginForm is MVC, @Ajax.BeginForm is also MVC, use standard HTML form to call API rather than MVC*@
+
+<form id="newRental">
+    @*I had to install ZenCoding extension to get the tab shortcut to work here, even though I had web essentials installed*@
+    <div class="form-group">
+        <label>Customer</label>
+        <div class="tt-container">
+            @*jQueryVal looks for validation rules that start with data-rule-NAME*@
+            @*video forgets the name="customer" etc part, which causes problems with jquery validation.. as it needs these to make the connection*@
+            <input id="customerTextbox" name="customer" required data-rule-validCustomer="true"  type="text" value="" class="form-control" />
+        </div>
+        
+    </div>
+
+    @*Zen coding example for the below form...*@
+    @*div.form-group>label+input[type='text'].form-control*@
+    <div class="form-group">
+        <label>Movie</label>
+        <div class="tt-container">
+            <input id="movieTextBox" name="movie" required data-rule-validMovieRentalNotNull="true"  type="text" value="" class="form-control" />
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="movies" class="list-group"></ul>
+        </div>
+    </div>
+    
+
+    <button  class="btn btn-primary">Submit</button>
+</form>
+
+@section scripts
+{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+
+            //Customer Textbox Type Ahead
+
+
+            //this variable - vm stands for view modle... as in a view model on the client, it is initialised as a blank model using {};, it will hold the customer / customer name? when one has been sleected from the typeahead text box
+            var vm = {
+                //customerId,
+                movieIds: []
+
+            };
+            var customersBHound = new Bloodhound({
+                //'value' changed to 'name' as customers have a name, not a value
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                //
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                //prefetch initialses system from an intiial APi call
+                //prefetch: '../data/films/post_1960.json',
+                remote: {
+                    url: '../api/customers/?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#customerTextbox').typeahead({
+                minLength: 3,
+                highlight: true,
+            },
+                {
+                name: 'customers',
+                display: 'name',
+                source: customersBHound
+                }).on("typeahead:select", function (e, customer) {
+                    //vm.customerId = customer.id NOT customer.Id.. capital breaks it for some reason
+                    //also - the property name in vm must be the same as in NewRentalsController.cs, otherwise then we create a new rental, the movieId = null.. the case doesn't matter here though
+
+                    vm.customerId = customer.id;
+
+                });
+
+
+
+            //Movie textbox Type ahead
+
+
+            //var vmMov = {};
+            var moviesBHound = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+               
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                
+                remote: {
+                    url: '../api/movies/?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#movieTextBox').typeahead({
+                minLength: 2,
+                highlight: true,
+            },
+                {
+                    name: 'movies',
+                    display: 'name',
+                    source: moviesBHound
+                }).on("typeahead:select", function (e, movie) {
+                    $("#movies").append("<li class='list-group-item'>" + movie.name + "</li>");
+                    //vmMov.movieId = movie.Id;
+
+                    $("#movieTextBox").typeahead("val", "");
+                    vm.movieIds.push(movie.id);
+
+                });
+
+            $.validator.addMethod("validCustomer", function () {
+                return vm.customerId && vm.customerId !== 0;
+            },
+                "Please select a valid customer"
+            );
+
+            $.validator.addMethod("validMovieRentalNotNull", function () {
+                return vm.movieIds.length > 0;
+            },
+                "Please ensure you select at least one movie to rent"
+            );
+
+            
+
+
+            var validator = $("#newRental").validate({
+                submitHandler: function () {
+                    //without the preventdefault you will have tranditional HTML form, not what we want
+                    //but once you have moved this routine into the .validate routine, and not the .submit routine, you no longer provide 2 as an arg, so this stops working...commented out after video 126, might need to add e args back in later?
+                    //e.preventDefault();
+
+                    $.ajax({
+                        url: "/api/rentals",
+                        method: "post",
+                        data: vm
+                    })
+                        .done(function () {
+                            console.log("done")
+                            toastr.success("Rentals successfully recorded");
+
+                            //below clears the form / model etc for the next rental
+                            $("#customer").typeahead("val", "");
+                            $("#movie").typeahead("val", "");
+                            $("#movies").empty();
+                            vm = { movieIds: [] };
+                            validator.resetForm();
+
+                        })
+                        .fail(function () {
+                            toastr.error("Something unexpected happened")
+                        });
+                    //had to return false here instead of e.preventDefault();
+                    return false;
+                }
+            });
+
+            /*
+             * //old submit handler, moved into jquery validation handler so form is validated
+            $("#newRental").submit(function (e) {
+               
+            });
+            */
+
+        });
+
+        //task - set up type ahead on the movie text box
+    </script>
+    
+}
+

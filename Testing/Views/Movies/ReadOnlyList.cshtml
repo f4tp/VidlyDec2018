@@ -1,0 +1,93 @@
+﻿@*@model VidlyDec2018.ViewModels.AllMoviesViewModel *@
+
+@*I think this needs to be the viewmodel rather than teh Movie model... Themovie is still null*@
+
+
+@*@model IEnumerable<VidlyDec2018.Models.Movie>*@
+@*@model List<VidlyDec2018.ViewModels.Movies.MovieFormViewModel>*@
+@*@model VidlyDec2018.ViewModels.Movies.MovieFormViewModel*@
+@model IEnumerable<VidlyDec2018.Models.Movie>
+
+@{
+    ViewBag.Title = "AllMovies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>AllMoviesIndex</h2>
+
+@* new button deleted from here*@
+
+@*
+@using (Html.BeginForm("New", "Movies"))
+{
+
+    <div>
+        <button type="submit" class="btn btn-primary"> New Movie </button>
+    </div>
+}
+    *@
+
+
+    <table id="movies" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Movies</th>
+                <th>Genre</th>
+                @*<th>Delete</th>*@
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @*
+            @foreach (var movie in Model)
+        {
+            <tr>
+            *@
+            @*<td>@Html.Action(movie.Name, "Movies")</td>*@
+
+            @*
+                    <td>@Html.ActionLink(movie.Name, String.Format("/Edit/{0}", movie.Id), "Movies")</td>
+
+                    <td>@movie.Genre.Id</td>
+                    <td> <button data-movie-id="@movie.Id" class="btn-link js-delete">Delete</button></td>
+
+                </tr>
+
+
+        }
+            *@
+
+        </tbody>
+
+    </table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+           var movTable =  $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        
+                        data: "name",
+                        
+                    },
+                    {
+                        data: "genre.name"
+                    }
+                ]
+            });
+
+        });
+
+    </script>
+
+
+}
