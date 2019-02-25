@@ -49,14 +49,11 @@
     <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
@@ -294,21 +291,9 @@
     <Compile Include="Migrations\201812161430547_UpdateMoviesInNewProps.Designer.cs">
       <DependentUpon>201812161430547_UpdateMoviesInNewProps.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812161441362_SetNullableInMovies.cs" />
-    <Compile Include="Migrations\201812161441362_SetNullableInMovies.Designer.cs">
-      <DependentUpon>201812161441362_SetNullableInMovies.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201812181412109_UpdateDateTimeToNullableMovies.cs" />
     <Compile Include="Migrations\201812181412109_UpdateDateTimeToNullableMovies.Designer.cs">
       <DependentUpon>201812181412109_UpdateDateTimeToNullableMovies.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812181443279_AddIdPrimKeyMovies.cs" />
-    <Compile Include="Migrations\201812181443279_AddIdPrimKeyMovies.Designer.cs">
-      <DependentUpon>201812181443279_AddIdPrimKeyMovies.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812191142348_cancelLast.cs" />
-    <Compile Include="Migrations\201812191142348_cancelLast.Designer.cs">
-      <DependentUpon>201812191142348_cancelLast.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201812221030157_ValidationTagsMovieClass.cs" />
     <Compile Include="Migrations\201812221030157_ValidationTagsMovieClass.Designer.cs">
@@ -391,7 +376,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -523,8 +507,12 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <None Include="Properties\PublishProfiles\aspvidly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\aspvidly - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\RealeasePub.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -606,14 +594,18 @@
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Scripts\typeahead.jquery.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -713,17 +705,8 @@
     <EmbeddedResource Include="Migrations\201812161430547_UpdateMoviesInNewProps.resx">
       <DependentUpon>201812161430547_UpdateMoviesInNewProps.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812161441362_SetNullableInMovies.resx">
-      <DependentUpon>201812161441362_SetNullableInMovies.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812181412109_UpdateDateTimeToNullableMovies.resx">
       <DependentUpon>201812181412109_UpdateDateTimeToNullableMovies.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812181443279_AddIdPrimKeyMovies.resx">
-      <DependentUpon>201812181443279_AddIdPrimKeyMovies.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812191142348_cancelLast.resx">
-      <DependentUpon>201812191142348_cancelLast.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812221030157_ValidationTagsMovieClass.resx">
       <DependentUpon>201812221030157_ValidationTagsMovieClass.cs</DependentUpon>

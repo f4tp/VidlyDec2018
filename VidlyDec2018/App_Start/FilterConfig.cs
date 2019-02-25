@@ -12,7 +12,7 @@ namespace VidlyDec2018
             //...use [AllowAnonymous] above any method / class that you wish to be allowed with no authorisation, in each controller
             filters.Add(new AuthorizeAttribute());
 
-            //below is added so that teh app can only be accessed through the secure URL, not the other one which runs alongside of it
+            //below is added so that the app can only be accessed through the secure URL, not the other one which runs alongside of it
             filters.Add(new RequireHttpsAttribute());
         }
     }

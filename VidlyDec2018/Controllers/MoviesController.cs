@@ -13,7 +13,8 @@ using VidlyDec2018.ViewModels.Movies;
 
 namespace VidlyDec2018.Controllers
 {
-    [Authorize(Roles = RoleName.CanManageMovies)]
+   // [Authorize(Roles = RoleName.CanManageMovies)]
+   //[AllowAnonymous]
     public class MoviesController : Controller
     {
 
@@ -33,6 +34,7 @@ namespace VidlyDec2018.Controllers
 
         
         //[Route("Movies/AllMovies")]
+        //[AllowAnonymous]
         public ActionResult Index()
         {
             //the index page is now populated by making a call to the API, rather than using the MVC variant
@@ -51,7 +53,7 @@ namespace VidlyDec2018.Controllers
             }
             */
 
-            //below is the shorthand version of the
+            //below is how we return views based on roles - 
 
             if (User.IsInRole(RoleName.CanManageMovies))
                 return View("List");

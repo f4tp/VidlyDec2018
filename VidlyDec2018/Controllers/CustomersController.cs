@@ -102,16 +102,16 @@ namespace VidlyDec2018.Controllers
             return View("CustomerForm", viewModel);
         }
         //viewmodel passed in is model binding
-        //thsi only allows this method to be called with a Post HTTP request, not a get
+        //this only allows this method to be called with a Post HTTP request, not a get
         //public ActionResult Save(ViewModels.Customers.CustomerFormViewModel viewModel)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
-            //Model>State.IsValid - detects whether the Model passed in meets the valdiation rules set in the class
+            //Model>State.IsValid - detects whether the Model passed in meets the validation rules set in the class
 
             //validation failing because MembershipType object is empty / null
-            //all this took to solve it was creatign teh Customer object before in the New() method... I had already sent acorss the MembershipTypes in the viewmodel put in
+            //all this took to solve it was creating the Customer object before in the New() method... I had already sent acorss the MembershipTypes in the viewmodel put in
             if (!ModelState.IsValid)
             {
                 var viewModel = new CustomerFormViewModel

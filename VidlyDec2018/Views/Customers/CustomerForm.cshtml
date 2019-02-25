@@ -70,7 +70,7 @@
 
     @Html.HiddenFor(m => m.Customer.Id)
     @*below stops CSRF*@
-    @*needs on teh Save method also, [ValidateAntiForgeryToken] *@
+    @*needs on the Save method also, [ValidateAntiForgeryToken] *@
     @Html.AntiForgeryToken()
     <div>
         <button type="submit" class="btn btn-primary"> Save </button>

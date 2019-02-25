@@ -11,7 +11,8 @@ using VidlyDec2018.Models.Dto;
 
 namespace VidlyDec2018.Controllers.Api
 {
-    [Authorize(Roles = RoleName.CanManageMovies)]
+    //below only lets Admin users pull in data, view is generated and customer can see it but cannot pull data across
+    //[Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : ApiController
     {
 
